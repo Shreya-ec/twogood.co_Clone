@@ -40,38 +40,27 @@ function navbarAnimation() {
         transform: "translateY(-50%)",
         opacity: 0
     })
-
+    // logo top ani.
     gsap.to("#nav1 svg", {
         y: "-100%",
         scrollTrigger: {
             trigger: "#page1",
             scroller: "#main",
-            start: "top 0",
-            end: "top -5%",
-            scrub: true
+            start: "top 0",  // animation starts when the top of #page1 reaches the top of the #main scroller.
+            end: "top -5%",  // animation ends when the top of #page1 has scrolled 5% above the top of #main.
+            scrub: true,     // When you scroll forward, the animation progresses, When you scroll backward, the animation reverses.
         },
         marginTop: "-10px"
     })
-    gsap.to("#nav1 svg", {
-        y: "0%",
-        scrollTrigger: {
-            trigger: "#footer",
-            scroller: "#main",
-            start: "top 90%",
-            end: "top 85%",
-            scrub: true
-        },
-        marginTop: "0px"
-    });
-
+    // logo down ani. Scroll up
     gsap.to("#nav1 svg", {
         y: "-100%",
         scrollTrigger: {
             trigger: "#footer",
             scroller: "#main",
-            start: "top 80%", // When the top of #footer is at the top of the viewport
-            end: "top 85%", // When the bottom of #footer is at the top of the viewport
-            scrub: true
+            start: "top 60%",
+            end: "top 65%",
+            toggleActions: "reverse none none play", // onEnter onLeave onEnterBack onLeaveBack
         },
         marginTop: "-10px"
     });
@@ -176,7 +165,7 @@ function loadingAnimation() {
         scrollTrigger: {
             trigger: "#footer .mb",
             scroller: "#main",
-            start: "top 60%"
+            start: "top 65%"
         }
     })
     gsap.from(".lists li", {
@@ -221,7 +210,6 @@ function loadingAnimation() {
             start: "top 100%"
         }
     })
-
 }
 loadingAnimation();
 
@@ -288,15 +276,27 @@ function carousel() {
         updateContent(activeItemId);
     });
 
+    // function updateContent(itemId) {
+    //     const contentItems = document.querySelectorAll(".content");
+    //     contentItems.forEach(item => {
+    //         item.style.display = "none";
+    //     });
+    //     const contentId = `${itemId}-content`;
+    //     const contentToShow = document.getElementById(contentId);
+    //     if (contentToShow) {
+    //         contentToShow.style.display = "block";
+    //     }
+    // }
+
     function updateContent(itemId) {
         const contentItems = document.querySelectorAll(".content");
         contentItems.forEach(item => {
-            item.style.display = "none";
+            item.classList.remove("active"); // Remove active class to hide all items
         });
         const contentId = `${itemId}-content`;
         const contentToShow = document.getElementById(contentId);
         if (contentToShow) {
-            contentToShow.style.display = "block";
+            contentToShow.classList.add("active"); // Add active class to show the selected item
         }
     }
 
@@ -352,11 +352,13 @@ function emaildo() {
     const emailInput = document.querySelector('.emaildo');
     const arrow = document.querySelector("#ic1");
     const enter = document.querySelector("#ic2");
+    const circle = document.querySelector(".circleout");
 
     emailInput.addEventListener('focus', function () {
         this.placeholder = '';
         enter.style.display = "block";
         arrow.style.display = "none";
+        circle.style.display = "none";
     });
     emailInput.addEventListener('blur', function () {
         if (this.value === '') {
@@ -365,5 +367,38 @@ function emaildo() {
         enter.style.display = "none";
         arrow.style.display = "block";
     });
+
+    // Add event listener for button click
+    arrow.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent default button behavior
+        validateEmail(); // Call the email validation function
+    });
+
+    // Add event listener for Enter key press
+    emailInput.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent form submission
+            validateEmail(); // Call the email validation function
+        }
+    });
+
 }
 emaildo()
+
+// Email validation function
+function validateEmail() {
+    const emailInput = document.querySelector('.emaildo');
+    const emailValue = emailInput.value.trim(); // Get the value and remove extra spaces
+    const greenMessage = document.querySelector('.green');
+    const redMessage = document.querySelector('.red');
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (emailRegex.test(emailValue)) {
+        greenMessage.style.display = 'block';
+        redMessage.style.display = 'none';
+    } else {
+        greenMessage.style.display = 'none';
+        redMessage.style.display = 'block';
+    }
+}
