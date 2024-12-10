@@ -1,0 +1,20 @@
+{
+  "name": "twogood.co_Clone",
+  "version": "1.0.0",
+  "description": "Clone of a Modern Animated Awwwarded Website - TwoGood.Co",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shreya-ec/twogood.co_Clone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shreya-ec/twogood.co_Clone/issues"
+  },
+  "homepage": "https://github.com/Shreya-ec/twogood.co_Clone#readme"
+}
